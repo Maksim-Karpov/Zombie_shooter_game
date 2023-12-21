@@ -14,3 +14,10 @@ There is only one map, which is forest with dense fog. (I have to admit that for
 ### 4) 
 More should come when I have some time :D
 
+### 5) What is planned to be added (depends on ursina possibilities and my competence)
+-Player health, which is drained when attacked and slowly regenerating when away from danger
+-Remade player control w/o default one
+-Camera shakes when running, reloading, shooting and beaing attacked
+-Adding more sounds (walking, running, zombie sounds)
+-Small optimization via compressing and cutting sound files along with texture resolution
+
