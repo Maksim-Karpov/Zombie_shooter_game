@@ -10,20 +10,22 @@ class pistolGun(Entity):
 		    scale=0.0008,
 		    position=Vec3(0.4, -0.5, 1), #(1, 1.6, 10)
 		    rotation=(0, 90, 0),
-		    double_sided = True
+		    double_sided = True,
+			crosshair = Entity(parent=camera.ui, model='plane', texture="Assets/Crosshair.png", texture_scale=(1, 1), scale=0.04, double_sided=True, rotation_x=-90)
 		)
+
 		#viewmodel arrangement
 		self.non_aim_pos = self.position
 		self.aim_pos = Vec3(0, -0.387, 0.5) # (left-right(X), up-down(Y), forward-backward(Z)) (0, -0.385, 0.5) - perfect
 		self.damage = 20
 
 		#ammunition part
-		self.clip_capacity = 3 #8
-		self.full_ammo = 48 #40 
+		self.clip_capacity = 80 #8
+		self.full_ammo = 800 #40 
 		self.left_ammo = self.full_ammo
 		self.cur_bul_count = self.clip_capacity
 		self.is_reloading = False
-		self.reload_time = 1.2
+		self.reload_time = 1.2 #1.2
 		self.can_shoot = True
 		self.empty_click = False #----
 		self.empty_cooldown = False
@@ -33,7 +35,7 @@ class pistolGun(Entity):
 		self.gunshot = Audio('Assets/SFX/gunshots/pistol-shot.wav', loop=False, autoplay=False, volume=0.5)
 		self.empty_gun = Audio('Assets/SFX/gunshots/empty_gun.wav', loop=False, autoplay=False, volume=0.5)
 		self.pistol_reload = Audio("Assets/SFX/gunshots/pistol_reload.wav", loop=False, autoplay=False, volume=0.5)
-		self.shoot_delay = 0.3
+		self.shoot_delay = 0.1 #0.3
 		self.is_on_cooldown = False						  #(-430, 460, 30)
 		self.muzzle_flash = Entity(model='plane', position=(-430, 460, 10), parent=self, world_scale=.2, texture="Assets/Pistol_flash.png", texture_scale=(1,1), enabled=False, rotation_z=90, rotation_x=90)
 	
@@ -98,13 +100,9 @@ class pistolGun(Entity):
 		#here, the animation is supposed to play
 
 
-
-
-
-
-
 	def aim(self): #doesn't work now. (non-aim - |aim-non-aim| should work in theory)
 		self.position = self.aim_pos #(self.non_aim_pos - (self.aim_pos - self.non_aim_pos)*-1) * time.dt * 3
+		self.crosshair.visible = False
 
 	#def unaim(self):
 	#	self.position = (self.aim_pos + self.non_aim_pos) * time.dt * 3
@@ -122,5 +120,6 @@ class pistolGun(Entity):
 			return
 		else:
 			self.position = self.non_aim_pos
+			self.crosshair.visible = True
 			#elif not held_keys["right mouse"]: not good cuz it will be checking it all the time which will drop preformance
 		
